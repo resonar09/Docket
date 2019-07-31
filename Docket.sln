@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docket.UI", "Docket.UI\Docket.UI.csproj", "{7B4A51BA-8C96-4B96-8CE6-F6CC2529AF56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B4A51BA-8C96-4B96-8CE6-F6CC2529AF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4A51BA-8C96-4B96-8CE6-F6CC2529AF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4A51BA-8C96-4B96-8CE6-F6CC2529AF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4A51BA-8C96-4B96-8CE6-F6CC2529AF56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8FDD059-840E-4450-BA32-8D43D4BD52C0}
+	EndGlobalSection
+EndGlobal
