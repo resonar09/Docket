@@ -16,15 +16,17 @@ namespace Docket.UI.Data
         {
             _contextCreator = contextCreator;
         }
-        public Task<List<Client>> GetAllAsync()
+        public async Task<List<Client>> GetAllAsync()
         {
             List<Client> list = new List<Client>();
             list.Add(new Client { FirstName = "Thomas", LastName = "Huber" });
             list.Add(new Client { FirstName = "Andreas", LastName = "Boehler" });
             list.Add(new Client { FirstName = "Julia", LastName = "Huber" });
             list.Add(new Client { FirstName = "Chris", LastName = "Egin" });
-
-            return Task.Run(() => list);
+            //Mimic a long running get
+            await Task.Delay(3000);
+            //return Task.Run(() => list);
+            return list;
         }
     }
 }

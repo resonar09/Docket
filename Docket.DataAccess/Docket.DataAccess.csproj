@@ -49,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DocketDbContext.cs" />
+    <Compile Include="Migrations\201908011249007_InitialDatabase.cs" />
+    <Compile Include="Migrations\201908011249007_InitialDatabase.Designer.cs">
+      <DependentUpon>201908011249007_InitialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +65,11 @@
       <Project>{fb656d4d-21cf-4bd5-b098-1b9646ff72de}</Project>
       <Name>Docket.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201908011249007_InitialDatabase.resx">
+      <DependentUpon>201908011249007_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Docket.UI.Data
 {
-    public class DocketDataService : IDocketDataService
+    public class DocketSQLDataService : IDocketDataService
     {
         private readonly Func<DocketDbContext> _contextCreator;
 
-        public DocketDataService(Func<DocketDbContext> contextCreator)
+        public DocketSQLDataService(Func<DocketDbContext> contextCreator)
         {
             _contextCreator = contextCreator;
         }

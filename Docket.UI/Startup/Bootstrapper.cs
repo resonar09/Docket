@@ -18,7 +18,9 @@ namespace Docket.UI.Startup
             builder.RegisterType<DocketDbContext>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
-            builder.RegisterType<DocketMockDataService>().As<IDocketDataService>();
+            //builder.RegisterType<DocketMockDataService>().As<IDocketDataService>();
+            //builder.RegisterType<DocketDataService>().As<IDocketDataService>();
+            builder.RegisterType<DocketSQLiteDataService>().As<IDocketDataService>();
             return builder.Build();
         }
     }
