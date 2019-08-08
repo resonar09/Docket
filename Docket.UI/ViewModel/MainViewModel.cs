@@ -13,77 +13,88 @@ namespace Docket.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public ObservableCollection<Client> Clients { get; set; }
+        //public ObservableCollection<Client> Clients { get; set; }
         
         private string filterText;
-        private readonly IDocketDataService _docketDataService;
-        private Client _selectedClient;
-        private CollectionViewSource clientsCollection;
+        //private readonly IClientDataService _docketDataService;
+        //private Client _selectedClient;
+        //private CollectionViewSource clientsCollection;
+        public INavigationViewModel NavigationViewModel { get; }
+        public IClientDetailViewModel ClientDetailViewModel { get; private set; }
 
-        public MainViewModel(IDocketDataService docketDataService)
+        public MainViewModel(INavigationViewModel navigationViewModel, IClientDetailViewModel clientDetailViewModel)//IDocketDataService docketDataService)
         {
-            clientsCollection = new CollectionViewSource();
-            Clients = new ObservableCollection<Client>();
-            _docketDataService = docketDataService;
+            NavigationViewModel = navigationViewModel;
+            ClientDetailViewModel = clientDetailViewModel;
+            //clientsCollection = new CollectionViewSource();
+            //Clients = new ObservableCollection<Client>();
+            //_docketDataService = docketDataService;
         }
-        public Client SelectedClient
-        {
-            get { return _selectedClient; }
-            set
-            {
-                _selectedClient = value;
-                OnPropertyChanged();
-            }
-        }
-        public string FilterText
-        {
-            get
-            {
-                return filterText;
-            }
-            set
-            {
-                filterText = value;
-                this.clientsCollection.View.Refresh();
-                OnPropertyChanged();
-            }
-        }
-        public ICollectionView SourceCollection
-        {
-            get
-            {
-                clientsCollection.Source = Clients;
-                return this.clientsCollection.View;
-            }
-        }
+
         public async Task LoadAsync()
         {
-            var clients = await _docketDataService.GetAllAsync();
-            Clients.Clear();
-            foreach (var client in clients)
-            {
-                Clients.Add(client);
-            }
-            clientsCollection.Source = Clients;
-            clientsCollection.Filter += usersCollection_Filter;
+            //var clients = await _docketDataService.GetAllAsync();
+            //Clients.Clear();
+            //foreach (var client in clients)
+            //{
+            //    Clients.Add(client);
+            //}
+            await NavigationViewModel.LoadAsync();
+            //clientsCollection.Source = NavigationViewModel.Clients;
+            //clientsCollection.Filter += usersCollection_Filter;
         }
-        private void usersCollection_Filter(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrEmpty(FilterText))
-            {
-                e.Accepted = true;
-                return;
-            }
 
-            Client client = e.Item as Client;
-            if (client.FirstName.ToUpper().Contains(FilterText.ToUpper()))
-            {
-                e.Accepted = true;
-            }
-            else
-            {
-                e.Accepted = false;
-            }
-        }
+        //TODO make these work
+        //public Client SelectedClient
+        //{
+        //    get { return _selectedClient; }
+        //    set
+        //    {
+        //        _selectedClient = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //public string FilterText
+        //{
+        //    get
+        //    {
+        //        return filterText;
+        //    }
+        //    set
+        //    {
+        //        filterText = value;
+        //        this.clientsCollection.View.Refresh();
+        //        OnPropertyChanged();
+        //    }
+        //}
+        //public ICollectionView SourceCollection
+        //{
+        //    get
+        //    {
+        //        clientsCollection.Source = NavigationViewModel.Clients;
+        //        return this.clientsCollection.View;
+        //    }
+        //}
+
+
+     
+        //private void usersCollection_Filter(object sender, FilterEventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(FilterText))
+        //    {
+        //        e.Accepted = true;
+        //        return;
+        //    }
+
+        //    Client client = e.Item as Client;
+        //    if (client.FirstName.ToUpper().Contains(FilterText.ToUpper()))
+        //    {
+        //        e.Accepted = true;
+        //    }
+        //    else
+        //    {
+        //        e.Accepted = false;
+        //    }
+        //}
     }
 }
