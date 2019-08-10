@@ -13,5 +13,6 @@ namespace Docket.UI.Data.Repository
         Task SaveAsync();
         bool HasChanges();
         void Add(Client client);
+        void Remove(Client model);
     }
 }

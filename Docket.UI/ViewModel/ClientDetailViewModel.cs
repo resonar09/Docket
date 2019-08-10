@@ -2,6 +2,7 @@
 using Docket.UI.Data;
 using Docket.UI.Data.Repository;
 using Docket.UI.Event;
+using Docket.UI.View.Services;
 using Docket.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -19,14 +20,16 @@ namespace Docket.UI.ViewModel
     {
         private IClientRepository _clientRepository;
         private IEventAggregator _eventAggregator;
+        private readonly IMessageDialogService _messageDialogService;
 
         public ClientDetailViewModel(IClientRepository clientDataService,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             _clientRepository = clientDataService;
             _eventAggregator = eventAggregator;
-
+            _messageDialogService = messageDialogService;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
         private ClientWrapper _client;
@@ -46,37 +49,19 @@ namespace Docket.UI.ViewModel
         {
             get { return _hasChanges; }
             set
-            { 
-                if(_hasChanges != value)
+            {
+                if (_hasChanges != value)
                 {
-                     _hasChanges = value;
+                    _hasChanges = value;
                     OnPropertyChanged();
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
-   
+
             }
         }
 
         public ICommand SaveCommand { get; set; }
-
-        private bool OnSaveCanExecute()
-        {
-            //TODO: Check if Client is valid
-            return Client != null && !Client.HasErrors && HasChanges;
-        }
-
-        private async void OnSaveExecute()
-        {
-            await _clientRepository.SaveAsync();
-            HasChanges = _clientRepository.HasChanges();
-            _eventAggregator.GetEvent<AfterClientSavedEvent>().Publish(
-                new AfterClientSavedEventArgs
-                {
-                    Id = Client.Id,
-                    DisplayMember = $"{Client.FirstName} {Client.LastName}"
-                });
-        }
-
+        public ICommand DeleteCommand { get; set; }
 
         public async Task LoadAsync(int? clientId)
         {
@@ -84,7 +69,7 @@ namespace Docket.UI.ViewModel
                 await _clientRepository.GetByIdAsync(clientId.Value)
                 : CreateNewClient();
             Client = new ClientWrapper(client);
-            Client.PropertyChanged += (s , e) =>
+            Client.PropertyChanged += (s, e) =>
             {
                 if (!HasChanges)
                 {
@@ -94,7 +79,7 @@ namespace Docket.UI.ViewModel
                 {
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
-            }  ;
+            };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             if (Client.Id == 0)
             {
@@ -109,6 +94,32 @@ namespace Docket.UI.ViewModel
             var client = new Client();
             _clientRepository.Add(client);
             return client;
+        }
+        private async void OnSaveExecute()
+        {
+            await _clientRepository.SaveAsync();
+            HasChanges = _clientRepository.HasChanges();
+            _eventAggregator.GetEvent<AfterClientSavedEvent>().Publish(
+                new AfterClientSavedEventArgs
+                {
+                    Id = Client.Id,
+                    DisplayMember = $"{Client.FirstName} {Client.LastName}"
+                });
+        }
+        private bool OnSaveCanExecute()
+        {
+            return Client != null && !Client.HasErrors && HasChanges;
+        }
+
+        private async void OnDeleteExecute()
+        {
+            var result = _messageDialogService.ShowOkCancelDialog($"Do you really want to delete the client {Client.FirstName} {Client.LastName}", "Question");
+            if (result == MessageDialogResult.OK)
+            {
+                _clientRepository.Remove(Client.Model);
+                await _clientRepository.SaveAsync();
+                _eventAggregator.GetEvent<AfterClientDeletedEvent>().Publish(Client.Id);
+            }
         }
     }
 }

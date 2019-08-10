@@ -27,11 +27,11 @@ namespace Docket.UI.ViewModel
             _messageDialogService = messageDialogService;
             _eventAggregator.GetEvent<OpenClientDetailViewEvent>()
                 .Subscribe(OnOpenClientDetailView);
+            _eventAggregator.GetEvent<AfterClientDeletedEvent>()
+                    .Subscribe(AfterClientDeleted);
             CreateNewClientCommand = new DelegateCommand(OnCreateNewClientExecute);
             NavigationViewModel = navigationViewModel;
         }
-
-
 
         public INavigationViewModel NavigationViewModel { get; }
         public ICommand CreateNewClientCommand { get; }
@@ -63,7 +63,10 @@ namespace Docket.UI.ViewModel
         {
             OnOpenClientDetailView(null);
         }
-
+        private void AfterClientDeleted(int clientId)
+        {
+            ClientDetailViewModel = null;
+        }
 
     }
 }

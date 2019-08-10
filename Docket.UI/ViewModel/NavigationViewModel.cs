@@ -1,6 +1,7 @@
 ﻿using Docket.UI.Data.Lookup;
 using Docket.UI.Event;
 using Prism.Events;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -24,20 +25,10 @@ namespace Docket.UI.ViewModel
             clientsCollection = new CollectionViewSource();
             Clients = new ObservableCollection<NavigationItemViewModel>();
             _eventAggregator.GetEvent<AfterClientSavedEvent>().Subscribe(AfterClientSaved);
+            _eventAggregator.GetEvent<AfterClientDeletedEvent>().Subscribe(AfterClientDeleted);
         }
 
-        private void AfterClientSaved(AfterClientSavedEventArgs obj)
-        {
-            var lookupItem = Clients.SingleOrDefault(i => i.Id == obj.Id);
-            if (lookupItem == null)
-            {
-                Clients.Add(new NavigationItemViewModel(obj.Id, obj.DisplayMember, _eventAggregator));
-            }
-            else
-            {
-                lookupItem.DisplayMember = obj.DisplayMember;
-            }
-        }
+
 
         public async Task LoadAsync()
         {
@@ -105,6 +96,27 @@ namespace Docket.UI.ViewModel
             else
             {
                 e.Accepted = false;
+            }
+        }
+        private void AfterClientDeleted(int clientId)
+        {
+            var client = Clients.SingleOrDefault(f => f.Id == clientId);
+            if (client != null)
+            {
+                Clients.Remove(client);
+            }
+        }
+
+        private void AfterClientSaved(AfterClientSavedEventArgs obj)
+        {
+            var lookupItem = Clients.SingleOrDefault(i => i.Id == obj.Id);
+            if (lookupItem == null)
+            {
+                Clients.Add(new NavigationItemViewModel(obj.Id, obj.DisplayMember, _eventAggregator));
+            }
+            else
+            {
+                lookupItem.DisplayMember = obj.DisplayMember;
             }
         }
 
