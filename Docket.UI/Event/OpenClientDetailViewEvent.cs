@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Docket.UI.Event
 {
-    class OpenClientDetailViewEvent: PubSubEvent<int>
+    class OpenClientDetailViewEvent: PubSubEvent<int?>
     {
     }
 }

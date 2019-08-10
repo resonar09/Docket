@@ -1,8 +1,10 @@
 ﻿using Docket.UI.Event;
 using Docket.UI.View.Services;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Docket.UI.ViewModel
 {
@@ -11,7 +13,7 @@ namespace Docket.UI.ViewModel
         private string filterText;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
-        public INavigationViewModel NavigationViewModel { get; }
+   
         private IClientDetailViewModel _clientDetailViewModel;
         public Func<IClientDetailViewModel> _clientDetailViewModelCreator;
 
@@ -20,14 +22,19 @@ namespace Docket.UI.ViewModel
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
-
             _clientDetailViewModelCreator = clientDetailViewModelCreator;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
             _eventAggregator.GetEvent<OpenClientDetailViewEvent>()
                 .Subscribe(OnOpenClientDetailView);
+            CreateNewClientCommand = new DelegateCommand(OnCreateNewClientExecute);
             NavigationViewModel = navigationViewModel;
         }
+
+
+
+        public INavigationViewModel NavigationViewModel { get; }
+        public ICommand CreateNewClientCommand { get; }
         public IClientDetailViewModel ClientDetailViewModel
         {
             get { return _clientDetailViewModel; }
@@ -41,7 +48,7 @@ namespace Docket.UI.ViewModel
         {
             await NavigationViewModel.LoadAsync();
         }
-        private async void OnOpenClientDetailView(int clientId)
+        private async void OnOpenClientDetailView(int? clientId)
         {
             if(ClientDetailViewModel != null && ClientDetailViewModel.HasChanges)
             {
@@ -51,6 +58,10 @@ namespace Docket.UI.ViewModel
             }
             ClientDetailViewModel = _clientDetailViewModelCreator();
             await ClientDetailViewModel.LoadAsync(clientId);
+        }
+        private void OnCreateNewClientExecute()
+        {
+            OnOpenClientDetailView(null);
         }
 
 

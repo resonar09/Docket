@@ -78,9 +78,11 @@ namespace Docket.UI.ViewModel
         }
 
 
-        public async Task LoadAsync(int clientId)
+        public async Task LoadAsync(int? clientId)
         {
-            var client = await _clientRepository.GetByIdAsync(clientId);
+            var client = clientId.HasValue ?
+                await _clientRepository.GetByIdAsync(clientId.Value)
+                : CreateNewClient();
             Client = new ClientWrapper(client);
             Client.PropertyChanged += (s , e) =>
             {
@@ -94,7 +96,19 @@ namespace Docket.UI.ViewModel
                 }
             }  ;
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Client.Id == 0)
+            {
+                //Trick to trigger validation
+                Client.FirstName = "";
+                Client.LastName = "";
+            }
+        }
 
+        private Client CreateNewClient()
+        {
+            var client = new Client();
+            _clientRepository.Add(client);
+            return client;
         }
     }
 }

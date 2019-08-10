@@ -17,6 +17,12 @@ namespace Docket.UI.Data.Repository
         {
             _context = context;
         }
+
+        public void Add(Client client)
+        {
+            _context.Clients.Add(client);
+        }
+
         public async Task<Client> GetByIdAsync(int clientId)
         {
             return await _context.Clients.SingleAsync(c => c.Id == clientId);

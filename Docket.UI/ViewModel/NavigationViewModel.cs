@@ -28,8 +28,15 @@ namespace Docket.UI.ViewModel
 
         private void AfterClientSaved(AfterClientSavedEventArgs obj)
         {
-            var lookupItem = Clients.Single(i => i.Id == obj.Id);
-            lookupItem.DisplayMember = obj.DisplayMember;
+            var lookupItem = Clients.SingleOrDefault(i => i.Id == obj.Id);
+            if (lookupItem == null)
+            {
+                Clients.Add(new NavigationItemViewModel(obj.Id, obj.DisplayMember, _eventAggregator));
+            }
+            else
+            {
+                lookupItem.DisplayMember = obj.DisplayMember;
+            }
         }
 
         public async Task LoadAsync()
@@ -38,7 +45,7 @@ namespace Docket.UI.ViewModel
             Clients.Clear();
             foreach (var item in lookup)
             {
-                Clients.Add(new NavigationItemViewModel(item.Id,item.DisplayMember,_eventAggregator));
+                Clients.Add(new NavigationItemViewModel(item.Id, item.DisplayMember, _eventAggregator));
             }
             clientsCollection.Source = Clients;
             clientsCollection.Filter += usersCollection_Filter;
@@ -54,12 +61,12 @@ namespace Docket.UI.ViewModel
             {
                 _selectedClient = value;
                 OnPropertyChanged();
-                if(_selectedClient != null)
+                if (_selectedClient != null)
                 {
                     _eventAggregator.GetEvent<OpenClientDetailViewEvent>()
                         .Publish(_selectedClient.Id);
                 }
-            }        
+            }
         }
         public string FilterText
         {
