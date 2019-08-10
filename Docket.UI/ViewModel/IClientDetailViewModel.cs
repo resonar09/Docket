@@ -8,5 +8,6 @@ namespace Docket.UI.ViewModel
         //Client Client { get; }
 
         Task LoadAsync(int clientId);
+        bool HasChanges { get; }
     }
 }

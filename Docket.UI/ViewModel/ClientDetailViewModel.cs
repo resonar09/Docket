@@ -1,5 +1,6 @@
 ﻿using Docket.Model;
 using Docket.UI.Data;
+using Docket.UI.Data.Repository;
 using Docket.UI.Event;
 using Docket.UI.Wrapper;
 using Prism.Commands;
@@ -16,16 +17,15 @@ namespace Docket.UI.ViewModel
 {
     public class ClientDetailViewModel : ViewModelBase, IClientDetailViewModel
     {
-        private IClientDataService _clientDataService;
+        private IClientRepository _clientRepository;
         private IEventAggregator _eventAggregator;
 
-        public ClientDetailViewModel(IClientDataService clientDataService,
+        public ClientDetailViewModel(IClientRepository clientDataService,
             IEventAggregator eventAggregator)
         {
-            _clientDataService = clientDataService;
+            _clientRepository = clientDataService;
             _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<OpenClientDetailViewEvent>()
-                .Subscribe(OnOpenClientDetailView);
+
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
@@ -40,18 +40,35 @@ namespace Docket.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+        private bool _hasChanges;
+
+        public bool HasChanges
+        {
+            get { return _hasChanges; }
+            set
+            { 
+                if(_hasChanges != value)
+                {
+                     _hasChanges = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+   
+            }
+        }
+
         public ICommand SaveCommand { get; set; }
 
         private bool OnSaveCanExecute()
         {
-            //throw new NotImplementedException();
-            //TODO: Chech if Client is valid
-            return true;
+            //TODO: Check if Client is valid
+            return Client != null && !Client.HasErrors && HasChanges;
         }
 
         private async void OnSaveExecute()
         {
-            await _clientDataService.SaveAsync(Client.Model);
+            await _clientRepository.SaveAsync();
+            HasChanges = _clientRepository.HasChanges();
             _eventAggregator.GetEvent<AfterClientSavedEvent>().Publish(
                 new AfterClientSavedEventArgs
                 {
@@ -60,17 +77,24 @@ namespace Docket.UI.ViewModel
                 });
         }
 
-        private async void OnOpenClientDetailView(int clientId)
-        {
-            await LoadAsync(clientId);
-        }
 
         public async Task LoadAsync(int clientId)
         {
-            var client = await _clientDataService.GeByIdAsync(clientId);
+            var client = await _clientRepository.GetByIdAsync(clientId);
             Client = new ClientWrapper(client);
+            Client.PropertyChanged += (s , e) =>
+            {
+                if (!HasChanges)
+                {
+                    HasChanges = _clientRepository.HasChanges();
+                }
+                if (e.PropertyName == nameof(Client.HasErrors))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            }  ;
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+
         }
-
-
     }
 }

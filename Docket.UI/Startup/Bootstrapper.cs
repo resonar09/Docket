@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using Docket.DataAccess;
 using Docket.UI.Data;
+using Docket.UI.Data.Lookup;
+using Docket.UI.Data.Repository;
+using Docket.UI.View.Services;
 using Docket.UI.ViewModel;
 using Prism.Events;
 using System;
@@ -19,12 +22,13 @@ namespace Docket.UI.Startup
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance(); ;
             builder.RegisterType<DocketDbContext>().AsSelf();
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<ClientDetailViewModel>().As<IClientDetailViewModel>();
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
-            builder.RegisterType<ClientDataService>().AsImplementedInterfaces();
+            builder.RegisterType<ClientRepository>().AsImplementedInterfaces();
             builder.RegisterType<DocketSQLDataService>().As<IDocketDataService>();
             return builder.Build();
         }

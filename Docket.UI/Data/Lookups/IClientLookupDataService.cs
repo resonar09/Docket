@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Docket.Model;
 
-namespace Docket.UI.Data
+namespace Docket.UI.Data.Lookup
 {
     public interface IClientLookupDataService
     {

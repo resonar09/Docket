@@ -89,15 +89,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DatabaseHelper.cs" />
-    <Compile Include="Data\ClientDataService.cs" />
     <Compile Include="Data\DocketSQLiteDataService.cs" />
     <Compile Include="Data\DocketSQLDataService.cs" />
     <Compile Include="Data\DocketDataService.cs" />
     <Compile Include="Data\DocketMockDataService.cs" />
-    <Compile Include="Data\IClientLookupDataService.cs" />
-    <Compile Include="Data\IClientDataService.cs" />
+    <Compile Include="Data\Lookups\IClientLookupDataService.cs" />
+    <Compile Include="Data\Repositories\ClientRepository.cs" />
     <Compile Include="Data\IDocketDataService.cs" />
-    <Compile Include="Data\LookupDataService.cs" />
+    <Compile Include="Data\Lookups\LookupDataService.cs" />
+    <Compile Include="Data\Repositories\IClientRepository.cs" />
     <Compile Include="Event\AfterClientSavedEvent.cs" />
     <Compile Include="Event\OpenClientDetailViewEvent.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
@@ -114,6 +114,8 @@
     <Compile Include="View\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Services\IMessageDialogService.cs" />
+    <Compile Include="View\Services\MessageDialogService.cs" />
     <Compile Include="Wrapper\ClientWrapper.cs" />
     <Compile Include="Wrapper\ModelWrapper.cs" />
     <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />

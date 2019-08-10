@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Docket.UI.Data
+namespace Docket.UI.Data.Lookup
 {
     public class LookupDataService : IClientLookupDataService
     {

@@ -1,13 +1,9 @@
-﻿using Docket.Model;
-using Docket.UI.Data;
+﻿using Docket.UI.Data.Lookup;
 using Docket.UI.Event;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
@@ -42,7 +38,7 @@ namespace Docket.UI.ViewModel
             Clients.Clear();
             foreach (var item in lookup)
             {
-                Clients.Add(new NavigationItemViewModel(item.Id,item.DisplayMember));
+                Clients.Add(new NavigationItemViewModel(item.Id,item.DisplayMember,_eventAggregator));
             }
             clientsCollection.Source = Clients;
             clientsCollection.Filter += usersCollection_Filter;
