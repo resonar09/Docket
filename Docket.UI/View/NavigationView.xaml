@@ -22,7 +22,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding DisplayMember}" 
+                        <Button Content="{Binding DisplayMember}" Width="Auto"
                                 Command="{Binding OpenClientDetailViewCommand}">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">

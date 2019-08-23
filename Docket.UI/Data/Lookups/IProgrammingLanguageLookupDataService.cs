@@ -4,8 +4,8 @@ using Docket.Model;
 
 namespace Docket.UI.Data.Lookups
 {
-    public interface IClientLookupDataService
+    public interface IProgrammingLanguageLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetClientLookupAsync();
+        Task<IEnumerable<LookupItem>> GetProgrammingLanguageLookupAsync();
     }
 }

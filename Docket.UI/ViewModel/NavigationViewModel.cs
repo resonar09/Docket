@@ -1,4 +1,4 @@
-﻿using Docket.UI.Data.Lookup;
+﻿using Docket.UI.Data.Lookups;
 using Docket.UI.Event;
 using Prism.Events;
 using System;

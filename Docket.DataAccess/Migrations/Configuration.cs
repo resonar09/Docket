@@ -17,11 +17,19 @@ namespace Docket.DataAccess.Migrations
         {
             context.Clients.AddOrUpdate(
                 f => f.FirstName,
-                new Client { FirstName = "Thomas", LastName = "Huber" },
-                new Client { FirstName = "Urs", LastName = "Meier" },
-                new Client { FirstName = "Erkan", LastName = "Egin" },
-                new Client { FirstName = "Sara", LastName = "Huber" }
+                new Client { FirstName = "Thomas", LastName = "Huber", MiddleInitial="D", Email="test@test.com", BirthDate = DateTime.Now},
+                new Client { FirstName = "Urs", LastName = "Meier", MiddleInitial = "A", Email = "test@test.com", BirthDate = DateTime.Now },
+                new Client { FirstName = "Erkan", LastName = "Egin", MiddleInitial = "F", Email = "test@test.com", BirthDate = DateTime.Now },
+                new Client { FirstName = "Sara", LastName = "Huber", MiddleInitial = "", Email = "test@test.com", BirthDate = DateTime.Now }
                 );
+            context.ProgrammingLanguages.AddOrUpdate(
+    pl => pl.Name,
+    new ProgrammingLanguage { Name = "C#" },
+    new ProgrammingLanguage { Name = "Typescript" },
+    new ProgrammingLanguage { Name = "Jave" },
+    new ProgrammingLanguage { Name = "Javascript" },
+    new ProgrammingLanguage { Name = "Angular" }
+    );
         }
     }
 }

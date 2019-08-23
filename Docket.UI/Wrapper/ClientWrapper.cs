@@ -19,17 +19,65 @@ namespace Docket.UI.Wrapper
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
+        public string MiddleInitial
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
         public string LastName
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
+
+        public string Street
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string City
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string State
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string Zip
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
         public string Email
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
+
+        public string SocialSecurity
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+        public DateTime? BirthDate
+        {
+            get { return GetValue<DateTime>(); }
+            set { SetValue(value); }
+        }
+
+        public int? FavoriteLanguageId
+        {
+            get { return GetValue<int?>(); }
+            set { SetValue(value); }
+        }
+
 
         protected override IEnumerable<string> ValidateProperty(string propertyName)
         {
@@ -42,8 +90,6 @@ namespace Docket.UI.Wrapper
                             yield return "Robots are not valid friends";
                         }
                         break;
-                    
-
             }
         }
         //private void ValidateProperty(string propertyName)

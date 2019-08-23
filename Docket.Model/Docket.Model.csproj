@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="LookupItem.cs" />
+    <Compile Include="ProgrammingLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -53,6 +53,26 @@
     <Compile Include="Migrations\201908011249007_InitialDatabase.Designer.cs">
       <DependentUpon>201908011249007_InitialDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908111324158_AddedProgrammingLanguage.cs" />
+    <Compile Include="Migrations\201908111324158_AddedProgrammingLanguage.Designer.cs">
+      <DependentUpon>201908111324158_AddedProgrammingLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908130202359_AddedMiddleInitial.cs" />
+    <Compile Include="Migrations\201908130202359_AddedMiddleInitial.Designer.cs">
+      <DependentUpon>201908130202359_AddedMiddleInitial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131423383_AddedAddress.cs" />
+    <Compile Include="Migrations\201908131423383_AddedAddress.Designer.cs">
+      <DependentUpon>201908131423383_AddedAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131425199_AddedAddress1.cs" />
+    <Compile Include="Migrations\201908131425199_AddedAddress1.Designer.cs">
+      <DependentUpon>201908131425199_AddedAddress1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908171726024_AddClientInfo.cs" />
+    <Compile Include="Migrations\201908171726024_AddClientInfo.Designer.cs">
+      <DependentUpon>201908171726024_AddClientInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,6 +89,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908011249007_InitialDatabase.resx">
       <DependentUpon>201908011249007_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908111324158_AddedProgrammingLanguage.resx">
+      <DependentUpon>201908111324158_AddedProgrammingLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908130202359_AddedMiddleInitial.resx">
+      <DependentUpon>201908130202359_AddedMiddleInitial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131423383_AddedAddress.resx">
+      <DependentUpon>201908131423383_AddedAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131425199_AddedAddress1.resx">
+      <DependentUpon>201908131425199_AddedAddress1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908171726024_AddClientInfo.resx">
+      <DependentUpon>201908171726024_AddClientInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

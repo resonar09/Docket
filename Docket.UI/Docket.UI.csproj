@@ -94,6 +94,7 @@
     <Compile Include="Data\DocketDataService.cs" />
     <Compile Include="Data\DocketMockDataService.cs" />
     <Compile Include="Data\Lookups\IClientLookupDataService.cs" />
+    <Compile Include="Data\Lookups\IProgrammingLanguageLookupDataService.cs" />
     <Compile Include="Data\Repositories\ClientRepository.cs" />
     <Compile Include="Data\IDocketDataService.cs" />
     <Compile Include="Data\Lookups\LookupDataService.cs" />

@@ -14,25 +14,68 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Content="FirstName" Margin="10 10 10 0" />
-        <TextBox Grid.Row="1" Text="{Binding Client.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="10 0 10 10"
-                     />
-        <Label Grid.Row="2" Content="LastName" Margin="10 0" />
-        <TextBox Grid.Row="3" Text="{Binding Client.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Margin="10 0 10 10"
-                     />
-        <Label Grid.Row="4" Content="Email" Margin="10 0" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+
+        </Grid.ColumnDefinitions>
+        <!--Row 1-->
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="FirstName" Margin="5" />
+        <Label Grid.Row="0" Grid.Column="2" Content="Middle" Margin="5" />
+        <Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Content="LastName" Margin="5" />
+
+        <!--Row 2-->
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Client.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Client.MiddleInitial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+        <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Client.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+
+        <!--Row 3-->
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Email" Margin="5" />
+        <Label Grid.Row="2" Grid.Column="3" Content="SSN#" Margin="5" />
+
+        <!--Row 4-->
+        <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Client.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+        <TextBox Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Client.SocialSecurity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+
+        <!--Row 5-->
+        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="Birth Date" Margin="5" />
+        <Label Grid.Row="4" Grid.Column="3" Content="Phone" Margin="5" />
+
+        <!--Row 6-->
+        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Client.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+        <TextBox Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding Client.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" />
+
+        <!--<Label Grid.Row="4" Content="Email" Margin="10 0" />
         <TextBox Grid.Row="5" Text="{Binding Client.Email, TargetNullValue='', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      Margin="10 0 10 10"
                      />
-        <StackPanel Grid.Row="7" Orientation="Horizontal">
+        <Label Grid.Row="6" Content="Favorite Language" Margin="10 0" />
+        <ComboBox  Grid.Row="7" ItemsSource="{Binding ProgrammingLanguages}"
+               DisplayMemberPath="DisplayMember"
+               SelectedValuePath="Id"
+               SelectedValue="{Binding Client.FavoriteLanguageId,Mode=TwoWay}"
+               Margin="10 0 10 10"/>-->
+        <StackPanel Grid.Row="9" Margin="10" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Width="125" Margin="10" Command="{Binding SaveCommand}"></Button>
             <Button Content="Delete" Width="125" Margin="10" Command="{Binding DeleteCommand}"></Button>
         </StackPanel>
 
+        <TabControl Grid.Row="10" Grid.ColumnSpan="5">
+            <TabItem Header="General">
+                <Label Content="Content goes here..." />
+            </TabItem>
+            <TabItem Header="Security" />
+            <TabItem Header="Details" />
+        </TabControl>
     </Grid>
+
 </UserControl>

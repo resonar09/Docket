@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Docket.DataAccess;
 using Docket.UI.Data;
-using Docket.UI.Data.Lookup;
+using Docket.UI.Data.Lookups;
 using Docket.UI.Data.Repository;
 using Docket.UI.View.Services;
 using Docket.UI.ViewModel;

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Docket.UI.Data.Lookup
+namespace Docket.UI.Data.Lookups
 {
-    public class LookupDataService : IClientLookupDataService
+    public class LookupDataService : IClientLookupDataService, IProgrammingLanguageLookupDataService
     {
         private readonly Func<DocketDbContext> _contextCreator;
 
@@ -27,6 +27,20 @@ namespace Docket.UI.Data.Lookup
                     DisplayMember = f.FirstName + " " + f.LastName
                 }).ToListAsync();
             }
+        }
+        public async Task<IEnumerable<LookupItem>> GetProgrammingLanguageLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                var proLangs = await ctx.ProgrammingLanguages.AsNoTracking().Select(f => new LookupItem
+                {
+                    Id = f.Id,
+                    DisplayMember = f.Name
+                }).ToListAsync();
+                return proLangs;
+            }
+
+               
         }
     }
 }

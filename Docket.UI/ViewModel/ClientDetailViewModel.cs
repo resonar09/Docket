@@ -1,18 +1,15 @@
 ﻿using Docket.Model;
-using Docket.UI.Data;
+using Docket.UI.Data.Lookups;
 using Docket.UI.Data.Repository;
 using Docket.UI.Event;
 using Docket.UI.View.Services;
 using Docket.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static Docket.Model.LookupItem;
 
 namespace Docket.UI.ViewModel
 {
@@ -21,15 +18,20 @@ namespace Docket.UI.ViewModel
         private IClientRepository _clientRepository;
         private IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
+        private readonly IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
         public ClientDetailViewModel(IClientRepository clientDataService,
-            IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
+            IEventAggregator eventAggregator, 
+            IMessageDialogService messageDialogService,
+            IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
         {
             _clientRepository = clientDataService;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
+            _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
         }
 
         private ClientWrapper _client;
@@ -43,6 +45,9 @@ namespace Docket.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get; }
+
         private bool _hasChanges;
 
         public bool HasChanges
@@ -68,6 +73,14 @@ namespace Docket.UI.ViewModel
             var client = clientId.HasValue ?
                 await _clientRepository.GetByIdAsync(clientId.Value)
                 : CreateNewClient();
+
+            InitializeClient(client);
+
+            await LoadProgrammingLanguageLookupAsync();
+        }
+
+        private void InitializeClient(Client client)
+        {
             Client = new ClientWrapper(client);
             Client.PropertyChanged += (s, e) =>
             {
@@ -85,7 +98,24 @@ namespace Docket.UI.ViewModel
             {
                 //Trick to trigger validation
                 Client.FirstName = "";
+                Client.MiddleInitial = "";
                 Client.LastName = "";
+                Client.City = "";
+                Client.Email = "";
+                Client.State = "";
+                Client.Street = "";
+                Client.Zip = "";
+            }
+        }
+
+        private async Task LoadProgrammingLanguageLookupAsync()
+        {
+            ProgrammingLanguages.Clear();
+            ProgrammingLanguages.Add(new NullLookupItem { DisplayMember = " - " });
+            var lookup = await _programmingLanguageLookupDataService.GetProgrammingLanguageLookupAsync();
+            foreach (var lookupItem in lookup)
+            {
+                ProgrammingLanguages.Add(lookupItem);
             }
         }
 
